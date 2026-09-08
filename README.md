@@ -14,6 +14,8 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 - **授权访问本地文件**：关联指定文件夹，阅读并修改文档、文本资料与代码。文件修改带校验与撤销，帮助你安全地处理自己的文件。
 - **多智能体并行工作**：让多个助手分别研究、编写、验证和整理，在同一对话中跟进进度；可为不同助手选择不同模型。
 - **本轮改动总结**：查看新建、修改、删除的文件，增删行数与逐行差异，并按需撤销。每个文件旁的「下载」按钮可保存文件当前内容，保留原文件名；已删除的文件可先撤销删除再下载。
+- **项目文件栏**：右侧分别列出浏览器内的项目文件、当前对话附件和你明确授权的本地目录；支持刷新、文件名搜索、预览、原名下载、多文件上传与拖放。窄屏下以抽屉显示。
+- **图片理解**：选择、拖放或粘贴图片，发送前检查缩略图并移除不需要的图片；支持视觉输入的模型会收到图片。图片会随对话保存，可放大查看和下载。
 - **跨对话记忆**：延续长期偏好、项目背景和之前的讨论。在「设置 → 记忆」查看和修改全局记忆，在项目面板管理项目记忆。
 - **提醒与定时执行**：用自然语言安排一次性、每日或每周任务，在「设置 → 提醒」查看和取消。页面打开时到点执行；配置推送后，关闭页面也能收到提醒，重新打开再执行任务。
 
@@ -21,7 +23,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 1. 下载 `exocoetidae.html` 并用现代浏览器打开，或访问静态托管的 `/exocoetidae.html`。
 2. 初次打开会显示模型设置。可以关闭设置，用免费兜底试聊；也可以选择厂商、点击「添加」，填写 API key、Base URL 和模型名称。
-3. 选择模型，开始对话。需要文件时上传文本资料或授权关联本地文件夹；需要并行分工、记忆或定时执行时，直接提出要求。
+3. 选择模型，开始对话。需要文件时打开右侧文件栏上传资料或授权关联本地文件夹；图片可通过「＋ 图片」、拖放或粘贴加入。需要并行分工、记忆或定时执行时，直接提出要求。
 
 当前界面以中文为主，支持中英文交流。本地目录访问需要浏览器支持与授权，建议使用近期版本的 Chrome 或 Edge。文档编辑面向文本文件，不是 Word 或 PDF 的版式编辑器。
 
@@ -65,6 +67,8 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 - **Local files with your permission**: authorise a selected folder to read and edit documents, text and code. Validation and undo help you make changes safely.
 - **Parallel agents**: assign research, writing, verification and organisation to different assistants, follow progress in one conversation and optionally choose a model for each.
 - **Changes This Turn**: review created, modified and deleted files, added and removed line counts, line-by-line differences and undo options. Download the current file contents with the original filename using 「下载」; restore deleted files before downloading them.
+- **Project file panel**: the right-hand panel separately shows browser-stored project files, attachments for the current conversation and explicitly authorised local folders. It supports refresh, filename search, previews, original-name downloads, multi-file upload and drag-and-drop, with a drawer layout on narrow screens.
+- **Image understanding**: choose, drop or paste images, review and remove thumbnails before sending, then pass them to a vision-capable model. Images persist with the conversation and can be enlarged or downloaded.
 - **Memory across conversations**: carry preferences, project context and earlier discussions into new chats. Edit global memory under Settings → Memory (「设置 → 记忆」) and project memory in the project panel.
 - **Reminders and scheduled tasks**: request one-off, daily or weekly tasks; review and cancel them under Settings → Reminders (「设置 → 提醒」). Tasks run while the page is open. With push configured, reminders can arrive while it is closed; tasks execute after you reopen it.
 
@@ -72,7 +76,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 1. Download and open `exocoetidae.html` in a modern browser, or visit `/exocoetidae.html` on a static host.
 2. Model settings appear on first launch. Close them to try the free fallback, or select a provider, click Add (「添加」) and enter its API key, Base URL and model names.
-3. Select a model and chat. Upload text or authorise a local folder for file tasks. Ask directly for parallel work, memory or scheduled execution.
+3. Select a model and chat. Use the right-hand file panel to upload files or authorise a local folder. Add images with 「＋ 图片」, drag-and-drop or paste. Ask directly for parallel work, memory or scheduled execution.
 
 The interface is primarily Chinese; conversations can be in Chinese or English. Folder access requires browser support and permission; recent Chrome or Edge versions are recommended. Document editing is for text files, not Word or PDF page layout.
 

@@ -1,5 +1,5 @@
 // Cloudflare Worker for Exocoetidae. Env: TOKEN (shared secret), BRAVE_KEY (optional), KV binding "KV" + a cron trigger (* * * * *) for push reminders.
-const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'x-token,content-type', 'access-control-allow-methods': 'GET,POST,OPTIONS' };
+const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'x-token,content-type,authorization,mcp-protocol-version,mcp-session-id,last-event-id', 'access-control-allow-methods': 'GET,POST,DELETE,OPTIONS', 'access-control-expose-headers': 'mcp-session-id,mcp-protocol-version' };
 const json = (o, s = 200) => new Response(JSON.stringify(o), { status: s, headers: { ...CORS, 'content-type': 'application/json' } });
 const strip = h => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
 
@@ -66,6 +66,14 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
     if (env.TOKEN && req.headers.get('x-token') !== env.TOKEN) return json({ error: 'bad token' }, 401);
     const u = new URL(req.url), q = u.searchParams.get('q') || '', count = +(u.searchParams.get('count') || 6);
+    if (u.pathname === '/mcp') {
+      if (!env.MCP_URL) return json({ error: 'MCP_URL is not configured' }, 501);
+      const headers = new Headers(req.headers); headers.delete('host'); headers.delete('x-token'); headers.set('accept', req.headers.get('accept') || 'application/json, text/event-stream');
+      if (env.MCP_TOKEN) headers.set('authorization', 'Bearer ' + env.MCP_TOKEN);
+      const upstream = await fetch(env.MCP_URL, { method: req.method, headers, body: ['GET', 'HEAD'].includes(req.method) ? undefined : req.body, redirect: 'manual' });
+      const out = new Headers(upstream.headers); for (const [k, v] of Object.entries(CORS)) out.set(k, v);
+      return new Response(upstream.body, { status: upstream.status, headers: out });
+    }
     if (u.pathname === '/ping') return new Response('ok' + (env.BRAVE_KEY ? ' brave' : ' ddg') + (env.KV ? ' push' : ''), { headers: CORS });
     if (u.pathname === '/vapid') return env.KV ? json({ key: (await vapid(env)).pub }) : json({ error: '未绑定 KV' }, 501);
     if (u.pathname === '/reminders' && req.method === 'POST') {
