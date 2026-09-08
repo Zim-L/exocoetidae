@@ -10,7 +10,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### 能做什么
 
-- **对话与模型切换**：接入自己的 API，也可以先用内置免费兜底试聊。支持流式回答、Markdown、公式、历史搜索、项目分组、分支与临时对话。
+- **打开即用的对话与模型切换**：默认模型会自动尝试多个免费通道，也可在设置中接入自己的 API。支持流式回答、Markdown、公式、历史搜索、项目分组、分支与临时对话；右上角可调字体或快速打开模型设置。
 - **授权访问本地文件**：关联指定文件夹，阅读并修改文档、文本资料与代码。文件修改带校验与撤销，帮助你安全地处理自己的文件。
 - **多智能体并行工作**：让多个助手分别研究、编写、验证和整理，在同一对话中跟进进度；可为不同助手选择不同模型。
 - **本轮改动总结**：查看新建、修改、删除的文件，增删行数与逐行差异，并按需撤销。每个文件旁的「下载」按钮可保存文件当前内容，保留原文件名；已删除的文件可先撤销删除再下载。
@@ -22,8 +22,8 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 ### 开始使用
 
 1. 下载 `exocoetidae.html` 并用现代浏览器打开，或访问静态托管的 `/exocoetidae.html`。
-2. 初次打开会显示模型设置。可以关闭设置，用免费兜底试聊；也可以选择厂商、点击「添加」，填写 API key、Base URL 和模型名称。
-3. 选择模型，开始对话。需要文件时打开右侧文件栏上传资料或授权关联本地文件夹；图片可通过「＋ 图片」、拖放或粘贴加入。需要并行分工、记忆或定时执行时，直接提出要求。
+2. 页面会直接进入对话，右上角显示「默认模型－模型名」；无需先配置。想要更稳定时，再从右上角或左下角打开设置，添加自己的 API key、Base URL 和模型名称。
+3. 输入任务即可。需要文件时打开右侧文件栏上传资料或授权关联本地文件夹；图片可通过「＋ 图片」、拖放或粘贴加入。需要并行分工、记忆或定时执行时，直接提出要求。
 
 当前界面以中文为主，支持中英文交流。本地目录访问需要浏览器支持与授权，建议使用近期版本的 Chrome 或 Edge。文档编辑面向文本文件，不是 Word 或 PDF 的版式编辑器。
 
@@ -31,7 +31,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### 免费兜底与自己的 API
 
-内置兜底使用 OVHcloud AI Endpoints 的 `gpt-oss-120b` 匿名通道，无需填写 key。官方当前限制为每个 IP、每个模型每分钟 2 次请求，页面会安排等待；同一网络下的其他使用者也可能占用额度。参见 [OVHcloud 使用限制](https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-capabilities)。适合试用和临时应急，复杂的多智能体任务建议使用自己的 API。
+「默认模型」无需 key，会依次尝试 OVHcloud 的 `gpt-oss-120b`、`Qwen3.8-27B` 与 Kilo 的 `kilo-auto/free`；明确无需工具或图片的普通文字任务还可使用 LLM7 的 `default`。成功后，右上角只显示服务实际返回的模型名；全部不可用时仍显示「模型」，并提示稍后重试或添加 API。免费服务会限流且可用模型可能变化；Kilo 若阻止浏览器跨域会被自动跳过。参见 [OVHcloud 使用限制](https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-capabilities)、[Kilo Auto Free](https://kilo.ai/docs/gateway/models-and-providers) 与 [LLM7 文档](https://docs.llm7.io/quickstart)。复杂或包含机密信息的任务建议使用自己的 API。
 
 日常使用推荐 DeepSeek，可先充值约 50 元人民币作为文字对话的起步预算；这不是无限额度，实际消耗取决于模型、上下文和任务规模。Base URL 为 `https://api.deepseek.com`；模型名称可点击「拉取」获取，或按官方列表填写。参见 [DeepSeek 接入指南](https://api-docs.deepseek.com/zh-cn/)与[当前价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)。
 
@@ -55,7 +55,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### 数据
 
-设置、key、历史与记忆保存在当前浏览器。发送任务时，相关对话、记忆和读取的文件内容可能发给所选模型厂商；免费兜底的接收方为 OVHcloud。联网功能会发送相关搜索词或网址；启用推送后，提醒信息也会同步到你配置的增强服务。
+设置、key、历史与记忆保存在当前浏览器。发送任务时，相关对话、记忆和读取的文件内容可能发给所选模型厂商；默认模型可能交给 OVHcloud、Kilo 路由的免费模型提供方或 LLM7。免费路由可能记录输入与输出，请勿提交个人或机密信息。联网功能会发送相关搜索词或网址；启用推送后，提醒信息也会同步到你配置的增强服务。
 
 换设备、换访问地址或清理浏览器数据前，请在「设置 → 数据」导出备份并保存导出口令。不同地址的数据不会自动迁移。
 
@@ -63,7 +63,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### What it does
 
-- **Chat and provider switching**: connect your API or try the free fallback. Includes streaming replies, Markdown, maths, history search, projects, branches and temporary chats.
+- **Ready-to-use chat and provider switching**: the default model automatically tries several free routes, or you can connect your own API in Settings. Includes streaming replies, Markdown, maths, history search, projects, branches and temporary chats; font size and model settings are also available in the top bar.
 - **Local files with your permission**: authorise a selected folder to read and edit documents, text and code. Validation and undo help you make changes safely.
 - **Parallel agents**: assign research, writing, verification and organisation to different assistants, follow progress in one conversation and optionally choose a model for each.
 - **Changes This Turn**: review created, modified and deleted files, added and removed line counts, line-by-line differences and undo options. Download the current file contents with the original filename using 「下载」; restore deleted files before downloading them.
@@ -75,8 +75,8 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 ### Get started
 
 1. Download and open `exocoetidae.html` in a modern browser, or visit `/exocoetidae.html` on a static host.
-2. Model settings appear on first launch. Close them to try the free fallback, or select a provider, click Add (「添加」) and enter its API key, Base URL and model names.
-3. Select a model and chat. Use the right-hand file panel to upload files or authorise a local folder. Add images with 「＋ 图片」, drag-and-drop or paste. Ask directly for parallel work, memory or scheduled execution.
+2. The page opens directly into chat and shows “默认模型－model name” in the top bar; no setup is required. For steadier service, open Settings from the top right or bottom left and add your API key, Base URL and model names.
+3. Type a task and send it. Use the right-hand file panel to upload files or authorise a local folder. Add images with 「＋ 图片」, drag-and-drop or paste. Ask directly for parallel work, memory or scheduled execution.
 
 The interface is primarily Chinese; conversations can be in Chinese or English. Folder access requires browser support and permission; recent Chrome or Edge versions are recommended. Document editing is for text files, not Word or PDF page layout.
 
@@ -84,7 +84,7 @@ Try “Read these Markdown documents and make the terminology consistent”, “
 
 ### Free fallback and your own API
 
-The built-in fallback uses OVHcloud AI Endpoints' anonymous `gpt-oss-120b` service without a key. The documented limit is currently 2 requests per minute, per IP and per model. The page queues requests; other users on the same network can also consume the allowance. See [OVHcloud's service limits](https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-capabilities). It suits quick trials and temporary sessions; use your own API for demanding multi-agent tasks.
+The key-free Default Model tries OVHcloud `gpt-oss-120b`, OVHcloud `Qwen3.8-27B`, then Kilo `kilo-auto/free`. For plain text tasks that clearly need neither tools nor images, it can also try LLM7 `default`. Once connected, the top bar shows only the model name returned by the service; if none can be resolved, it simply says “模型”. Free routes are rate-limited and their underlying models can change. Kilo is skipped automatically when its browser endpoint does not permit cross-origin requests. See [OVHcloud limits](https://docs.ovhcloud.com/en/guides/public-cloud/ai-machine-learning/ai-endpoints-capabilities), [Kilo Auto Free](https://kilo.ai/docs/gateway/models-and-providers) and [LLM7 quickstart](https://docs.llm7.io/quickstart). Use your own API for demanding or confidential work.
 
 DeepSeek is the recommended everyday starting option. Around RMB 50 is a suggested initial text-chat budget, not unlimited credit; consumption depends on the model, context and task size. Use `https://api.deepseek.com` as the Base URL and fetch model names with 「拉取」 or enter them from the official list. See the [setup guide](https://api-docs.deepseek.com/) and [current pricing](https://api-docs.deepseek.com/quick_start/pricing).
 
@@ -108,6 +108,6 @@ Scheduled execution requires the device and page to stay running; browser suspen
 
 ### Data
 
-Settings, keys, history and memory stay in the current browser. Tasks may send relevant conversation, memory and file contents to your selected model provider; the free fallback sends them to OVHcloud. Web features send relevant queries or URLs, and enabling push also synchronises reminder information with your configured enhancement service.
+Settings, keys, history and memory stay in the current browser. Tasks may send relevant conversation, memory and file contents to your selected provider; the Default Model may use OVHcloud, a free provider selected by Kilo, or LLM7. Free routing providers may log prompts and outputs, so do not submit personal or confidential material. Web features send relevant queries or URLs, and enabling push also synchronises reminder information with your configured enhancement service.
 
 Before changing devices or addresses, or clearing browser data, export a backup under Settings → Data and retain its passphrase. Data does not automatically migrate between addresses.

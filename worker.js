@@ -74,6 +74,13 @@ export default {
       const out = new Headers(upstream.headers); for (const [k, v] of Object.entries(CORS)) out.set(k, v);
       return new Response(upstream.body, { status: upstream.status, headers: out });
     }
+    if (u.pathname.startsWith('/llm/kilo/')) {
+      const target = 'https://api.kilo.ai/api/gateway/' + u.pathname.slice('/llm/kilo/'.length);
+      const headers = new Headers(req.headers); headers.delete('host'); headers.delete('x-token');
+      const upstream = await fetch(target, { method: req.method, headers, body: ['GET', 'HEAD'].includes(req.method) ? undefined : req.body });
+      const out = new Headers(upstream.headers); for (const [k, v] of Object.entries(CORS)) out.set(k, v);
+      return new Response(upstream.body, { status: upstream.status, headers: out });
+    }
     if (u.pathname === '/ping') return new Response('ok' + (env.BRAVE_KEY ? ' brave' : ' ddg') + (env.KV ? ' push' : ''), { headers: CORS });
     if (u.pathname === '/vapid') return env.KV ? json({ key: (await vapid(env)).pub }) : json({ error: '未绑定 KV' }, 501);
     if (u.pathname === '/reminders' && req.method === 'POST') {
