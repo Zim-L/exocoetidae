@@ -1,6 +1,6 @@
 # Exocoetidae
 
-**轻量多智能体助手 · Lightweight Multi-Agent Assistant**
+[**轻量多智能体助手 · Lightweight Multi-Agent Assistant**](https://zim-l.github.io/exocoetidae)
 
 一个可以随手打开的 AI 工作窗口：对话、处理文件、并行分工、记住上下文，也可以安排稍后执行的任务。
 
