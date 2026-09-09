@@ -16,6 +16,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 - **本轮改动总结**：查看新建、修改、删除的文件，增删行数与逐行差异，并按需撤销。每个文件旁的「下载」按钮可保存文件当前内容，保留原文件名；已删除的文件可先撤销删除再下载。
 - **项目文件栏**：右侧分别列出浏览器内的项目文件、当前对话附件和你明确授权的本地目录；支持刷新、文件名搜索、预览、原名下载、多文件上传与拖放。窄屏下以抽屉显示。
 - **图片理解**：选择、拖放或粘贴图片，发送前检查缩略图并移除不需要的图片；支持视觉输入的模型会收到图片。图片会随对话保存，可放大查看和下载。
+- **免配置联网检索**：内置 DDG 搜索；抓取网页时让浏览器直连与免 key Jina Reader 自动竞速。单个通道失败会继续降级，结果自动去重并限制抓取大小，避免长时间卡住。
 - **跨对话记忆**：延续长期偏好、项目背景和之前的讨论。在「设置 → 记忆」查看和修改全局记忆，在项目面板管理项目记忆。
 - **提醒与定时执行**：用自然语言安排一次性、每日或每周任务，在「设置 → 提醒」查看和取消。页面打开时到点执行；配置推送后，关闭页面也能收到提醒，重新打开再执行任务。
 
@@ -39,7 +40,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### 可选：本地体验增强器
 
-两个使用文件为 `exocoetidae.html`（对话窗口）和可选的 `worker.js`（增强器），无需构建。增强器支持联网搜索、网页读取和推送提醒；基础对话、记忆、文件操作及页面打开时的定时任务无需配置它。
+两个使用文件为 `exocoetidae.html`（对话窗口）和可选的 `worker.js`（增强器），无需构建。基础版本已经支持免费的 DDG 搜索与网页读取；增强器可提高检索稳定性，并增加 Brave Search 和关闭页面后的推送提醒。
 
 1. 在 Cloudflare Workers 创建服务，上传 `worker.js`。
 2. 设置私密环境变量 `TOKEN` 为自己的访问口令；如使用 Brave Search，另设 `BRAVE_KEY`，否则使用默认搜索渠道。
@@ -55,7 +56,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 
 ### 数据
 
-设置、key、历史与记忆保存在当前浏览器。发送任务时，相关对话、记忆和读取的文件内容可能发给所选模型厂商；默认模型可能交给 OVHcloud、Kilo 路由的免费模型提供方或 LLM7。免费路由可能记录输入与输出，请勿提交个人或机密信息。联网功能会发送相关搜索词或网址；启用推送后，提醒信息也会同步到你配置的增强服务。
+设置、key、历史与记忆保存在当前浏览器。发送任务时，相关对话、记忆和读取的文件内容可能发给所选模型厂商；默认模型可能交给 OVHcloud、Kilo 路由的免费模型提供方或 LLM7。免费路由可能记录输入与输出，请勿提交个人或机密信息。联网检索会把搜索词或网址交给 DDG、Jina 或你配置的搜索服务；启用推送后，提醒信息也会同步到你配置的增强服务。
 
 换设备、换访问地址或清理浏览器数据前，请在「设置 → 数据」导出备份并保存导出口令。不同地址的数据不会自动迁移。
 
@@ -69,6 +70,7 @@ A compact AI workspace for conversations, file editing, parallel agents, shared 
 - **Changes This Turn**: review created, modified and deleted files, added and removed line counts, line-by-line differences and undo options. Download the current file contents with the original filename using 「下载」; restore deleted files before downloading them.
 - **Project file panel**: the right-hand panel separately shows browser-stored project files, attachments for the current conversation and explicitly authorised local folders. It supports refresh, filename search, previews, original-name downloads, multi-file upload and drag-and-drop, with a drawer layout on narrow screens.
 - **Image understanding**: choose, drop or paste images, review and remove thumbnails before sending, then pass them to a vision-capable model. Images persist with the conversation and can be enlarged or downloaded.
+- **Search without setup**: built-in DDG search works without a key. Web fetching races a direct browser request against the key-free Jina Reader path. Failed channels fall through, results are deduplicated, and response sizes are capped to avoid long stalls.
 - **Memory across conversations**: carry preferences, project context and earlier discussions into new chats. Edit global memory under Settings → Memory (「设置 → 记忆」) and project memory in the project panel.
 - **Reminders and scheduled tasks**: request one-off, daily or weekly tasks; review and cancel them under Settings → Reminders (「设置 → 提醒」). Tasks run while the page is open. With push configured, reminders can arrive while it is closed; tasks execute after you reopen it.
 
@@ -92,7 +94,7 @@ Other options include [Kimi / Moonshot](https://platform.kimi.com/docs/get-api-k
 
 ### Optional local experience enhancer
 
-The two usage files are `exocoetidae.html` (chat window) and optional `worker.js` (enhancer). No build step is required. The enhancer adds web search, webpage reading and push reminders. Basic chat, memory, file work and scheduling while the page is open do not require its setup.
+The two usage files are `exocoetidae.html` (chat window) and optional `worker.js` (enhancer). No build step is required. The base page already includes free DDG search and webpage reading. The enhancer improves retrieval reliability and adds Brave Search plus push reminders while the page is closed.
 
 1. Create a Cloudflare Worker and upload `worker.js`.
 2. Set the secret environment variable `TOKEN` to your passphrase. Optionally set `BRAVE_KEY` for Brave Search; otherwise the default search channel is used.
@@ -108,6 +110,6 @@ Scheduled execution requires the device and page to stay running; browser suspen
 
 ### Data
 
-Settings, keys, history and memory stay in the current browser. Tasks may send relevant conversation, memory and file contents to your selected provider; the Default Model may use OVHcloud, a free provider selected by Kilo, or LLM7. Free routing providers may log prompts and outputs, so do not submit personal or confidential material. Web features send relevant queries or URLs, and enabling push also synchronises reminder information with your configured enhancement service.
+Settings, keys, history and memory stay in the current browser. Tasks may send relevant conversation, memory and file contents to your selected provider; the Default Model may use OVHcloud, a free provider selected by Kilo, or LLM7. Free routing providers may log prompts and outputs, so do not submit personal or confidential material. Web retrieval sends relevant queries or URLs to DDG, Jina or your configured search service, and enabling push also synchronises reminder information with your configured enhancement service.
 
 Before changing devices or addresses, or clearing browser data, export a backup under Settings → Data and retain its passphrase. Data does not automatically migrate between addresses.
